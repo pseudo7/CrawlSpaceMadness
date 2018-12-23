@@ -23,9 +23,9 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
-    static Dictionary<Level, LevelInfo> levelMap;
+    public static Coroutine levelUpdater;
 
-    Coroutine levelUpdater;
+    static Dictionary<Level, LevelInfo> levelMap;
 
     private void Awake()
     {
@@ -79,7 +79,7 @@ public class LevelManager : MonoBehaviour
         UpdateLevel(Level.Level7);
         yield return new WaitForSeconds(Constants.LEVEL_7_EXIT_DURATION);
         Utility.isPoolingOver = true;
-        TunnelManager.Instance.ReverseFinish();
+        TunnelManager.Instance.ReverseFinish(true);
         yield return new WaitForSeconds(Constants.FINISH_UP_TIME);
         Utility.isGameOver = true;
         Application.Quit();

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour
 {
@@ -10,21 +9,7 @@ public class BallController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Handheld.Vibrate();
-        StartCoroutine(Reverse());
-    }
-
-    IEnumerator Reverse()
-    {
-        LeanTween.value(gameObject, ModifyTimeScale, Time.timeScale, 0, 1f);
-        CurvatureController.Instance.CrossFadeTiling(new Vector2(.1f, 1), 2f);
-        yield return new WaitForSecondsRealtime(3);
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    void ModifyTimeScale(float val)
-    {
-        Time.timeScale = val;
+        TunnelManager.Instance.ReverseFinish(false);
     }
 
     private void Update()

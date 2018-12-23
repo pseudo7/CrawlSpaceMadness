@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class TunnelManager : MonoBehaviour
 {
@@ -37,18 +37,27 @@ public class TunnelManager : MonoBehaviour
         }
     }
 
-    public void ReverseFinish()
+    public void ReverseFinish(bool isGameOver)
     {
-        foreach (var obstacle in obstaclesList)
-        {
-            obstacle.GetComponentInParent<TunnelPiece>().isObstacleEnabled = false;
-            obstacle.SetActive(false);
-        }
         LeanTween.value(gameObject, ModifyMovingSpeed, Utility.movingSpeed, -5, 5).setEaseInOutSine();
-        LeanTween.move(ballTransform.gameObject, Vector3.zero, 2f);
-        LeanTween.delayedCall(5, () => { CurvatureController.Instance.CrossFadeCurvature(Vector2.zero); })
-            .setOnComplete(() => { LeanTween.value(mainCam.gameObject, ModifyFOV, mainCam.fieldOfView, 179, 2).setEaseOutSine(); });
-        ;
+        if (isGameOver)
+        {
+            foreach (var obstacle in obstaclesList)
+            {
+                obstacle.GetComponentInParent<TunnelPiece>().isObstacleEnabled = false;
+                obstacle.SetActive(false);
+            }
+            LeanTween.move(ballTransform.gameObject, Vector3.zero, 2f);
+            LeanTween.delayedCall(5, () => { CurvatureController.Instance.CrossFadeCurvature(Vector2.zero); })
+                .setOnComplete(() => { LeanTween.value(mainCam.gameObject, ModifyFOV, mainCam.fieldOfView, 179, 2).setEaseOutSine(); });
+        }
+        else
+        {
+            Utility.isPoolingOver = true;
+            StopCoroutine(LevelManager.levelUpdater);
+            CurvatureController.Instance.CrossFadeTiling(new Vector2(.1f, 1), 2f);
+            LeanTween.delayedCall(5f, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
+        }
     }
 
     void ModifyFOV(float fov)
