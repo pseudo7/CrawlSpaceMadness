@@ -8,6 +8,9 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (Utility.isGameOver)
+            return;
+        AudioManager.Instance.Play(Constants.PLAYER_DIE_AUDIO);
         Handheld.Vibrate();
         TunnelManager.Instance.ReverseFinish(false);
         var meshRenderer = collision.collider.GetComponent<MeshRenderer>();
@@ -18,7 +21,7 @@ public class BallController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
-        if (Utility.isGameOver)
+        if (Utility.isGameOver || Utility.isPoolingOver)
             return;
         float z;
 #if UNITY_EDITOR

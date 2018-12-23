@@ -60,10 +60,18 @@ public class LevelManager : MonoBehaviour
         var levelInfo = levelMap[level];
         CurvatureController.Instance.CrossFadeTiling(levelInfo.levelTiling);
         Utility.movingSpeed = levelInfo.movingSpeed;
+        AudioManager.Instance.UpdatePitch(Constants.BACKGROUND_TUNNEL_AUDIO, Utility.movingSpeed);
+    }
+
+    public void StopLevelUpdater()
+    {
+        AudioManager.Instance.Stop(Constants.BACKGROUND_TUNNEL_AUDIO);
+        StopCoroutine(levelUpdater);
     }
 
     IEnumerator LevelUpdater()
     {
+        AudioManager.Instance.Play(Constants.BACKGROUND_TUNNEL_AUDIO);
         UpdateLevel(Level.Level1);
         yield return new WaitForSeconds(Constants.LEVEL_1_EXIT_DURATION);
         UpdateLevel(Level.Level2);

@@ -54,7 +54,7 @@ public class TunnelManager : MonoBehaviour
         else
         {
             Utility.isPoolingOver = true;
-            StopCoroutine(LevelManager.levelUpdater);
+            LevelManager.Instance.StopLevelUpdater();
             CurvatureController.Instance.CrossFadeTiling(new Vector2(.1f, 1), 2f);
             LeanTween.delayedCall(5f, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
         }

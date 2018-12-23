@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 673821529}
   - component: {fileID: 673821530}
   - component: {fileID: 673821531}
+  - component: {fileID: 673821532}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -198,6 +199,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b21b0b82dcc9b4da605f2f0a3b1b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &673821532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 673821526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0089781edd8e09846983387d8044100d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Background
+    clip: {fileID: 8300000, guid: 66fd868e8e5fd274cbe673d8d851c4bf, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: PlayerDie
+    clip: {fileID: 8300000, guid: 4226438212654d94ab9c818d9d493258, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &1018269355
 GameObject:
   m_ObjectHideFlags: 0

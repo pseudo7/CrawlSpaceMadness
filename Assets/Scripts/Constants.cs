@@ -11,4 +11,7 @@
     public const float LEVEL_6_EXIT_DURATION = 5;
     public const float LEVEL_7_EXIT_DURATION = 5;
     public const float FINISH_UP_TIME = 10f;
+
+    public const string BACKGROUND_TUNNEL_AUDIO = "Background";
+    public const string PLAYER_DIE_AUDIO = "PlayerDie";
 }
