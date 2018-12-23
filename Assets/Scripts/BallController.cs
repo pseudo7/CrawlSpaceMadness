@@ -10,8 +10,9 @@ public class BallController : MonoBehaviour
     {
         if (Utility.isGameOver)
             return;
-        AudioManager.Instance.Play(Constants.PLAYER_DIE_AUDIO);
         Handheld.Vibrate();
+        AudioManager.Instance.Stop(Constants.BACKGROUND_TUNNEL_AUDIO);
+        AudioManager.Instance.Play(Constants.PLAYER_DIE_AUDIO);
         TunnelManager.Instance.ReverseFinish(false);
         var meshRenderer = collision.collider.GetComponent<MeshRenderer>();
         meshRenderer.material = new Material(Shader.Find("Standard")) { color = Color.red, mainTexture = meshRenderer.material.mainTexture };

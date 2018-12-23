@@ -65,7 +65,6 @@ public class LevelManager : MonoBehaviour
 
     public void StopLevelUpdater()
     {
-        AudioManager.Instance.Stop(Constants.BACKGROUND_TUNNEL_AUDIO);
         StopCoroutine(levelUpdater);
     }
 
