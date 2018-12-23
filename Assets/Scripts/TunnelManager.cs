@@ -8,6 +8,7 @@ public class TunnelManager : MonoBehaviour
     public static TunnelManager Instance;
 
     [Header("Controller")]
+    public int obstacleRepetition = 4;
     public Transform ballTransform;
     public Transform movingTransform;
     public List<GameObject> obstaclesList;
@@ -28,7 +29,7 @@ public class TunnelManager : MonoBehaviour
         {
             var poolObject = ObjectPooler.SharedInstance.GetPooledObject(0);
             poolObject.SetActive(true);
-            if (i % 5 == 0)
+            if (i % obstacleRepetition == 0)
                 poolObject.GetComponent<TunnelPiece>().isObstacleEnabled = true;
             var poolObjectTransform = poolObject.transform;
             poolObjectTransform.rotation = Quaternion.identity;
@@ -53,9 +54,9 @@ public class TunnelManager : MonoBehaviour
         }
         else
         {
+            CurvatureController.Instance.CrossFadeTiling(new Vector2(.1f, 1), 2f);
             Utility.isPoolingOver = true;
             LevelManager.Instance.StopLevelUpdater();
-            CurvatureController.Instance.CrossFadeTiling(new Vector2(.1f, 1), 2f);
             LeanTween.delayedCall(5f, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
         }
     }

@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346ab5ef148176349a0796ea29694509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleRepetition: 4
   ballTransform: {fileID: 1916593245}
   movingTransform: {fileID: 1303851526}
   obstaclesList: []
@@ -172,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tunnelMat: {fileID: 2100000, guid: 70d3911436f6684419e5216bd98fe87f, type: 2}
-  curvatureMultiplier: 45
+  curvatureMultiplier: 60
   curvatureDelay: 5
   curvature: {x: 0, y: 0}
   tiling: {x: 1, y: 1}
@@ -212,8 +213,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Background
-    clip: {fileID: 8300000, guid: 66fd868e8e5fd274cbe673d8d851c4bf, type: 3}
+    clip: {fileID: 8300000, guid: 6a1835153c4f1af408e7ec0491c46d71, type: 3}
     volume: 1
+    pitch: 1
+    spatialBlend: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: TunnelWoosh
+    clip: {fileID: 8300000, guid: 66fd868e8e5fd274cbe673d8d851c4bf, type: 3}
+    volume: 0.5
     pitch: 1
     spatialBlend: 0
     loop: 1

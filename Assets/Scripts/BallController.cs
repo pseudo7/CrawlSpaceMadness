@@ -11,7 +11,8 @@ public class BallController : MonoBehaviour
         if (Utility.isGameOver)
             return;
         Handheld.Vibrate();
-        AudioManager.Instance.Stop(Constants.BACKGROUND_TUNNEL_AUDIO);
+        AudioManager.Instance.Stop(Constants.TUNNEL_AUDIO);
+        AudioManager.Instance.Stop(Constants.BACKGROUND_AUDIO);
         AudioManager.Instance.Play(Constants.PLAYER_DIE_AUDIO);
         TunnelManager.Instance.ReverseFinish(false);
         var meshRenderer = collision.collider.GetComponent<MeshRenderer>();

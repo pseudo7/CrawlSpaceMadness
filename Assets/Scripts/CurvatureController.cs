@@ -31,6 +31,8 @@ public class CurvatureController : MonoBehaviour
     Vector2 currentTiling = new Vector2(.1f, 1);
     bool isCurveSimple;
 
+    LTDescr curveLT, tilingLT;
+
     private void Awake()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -71,17 +73,43 @@ public class CurvatureController : MonoBehaviour
 
     public void CrossFadeCurvature(Vector2 curvature)
     {
-        LeanTween.value(gameObject, UpdateCurvature, currentCurvature, (currentCurvature = curvature * curvatureMultiplier), 3f);
+        if (Utility.isPoolingOver)
+            return;
+        // If game is over add a check to not add a leantween
+        if (curveLT != null)
+            if (LeanTween.isTweening(curveLT.uniqueId))
+                curveLT.setOnComplete(() => { curveLT = LeanTween.value(gameObject, UpdateCurvature, currentCurvature, (currentCurvature = curvature * curvatureMultiplier), 3f); });
+        curveLT = LeanTween.value(gameObject, UpdateCurvature, currentCurvature, (currentCurvature = curvature * curvatureMultiplier), 3f);
     }
 
     public void CrossFadeTiling(Vector2 tiling)
     {
-        LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, 3f);
+        if (Utility.isPoolingOver)
+        {
+            if (tilingLT != null)
+                LeanTween.cancel(tilingLT.uniqueId);
+            tilingLT = LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, 3f);
+            return;
+        }
+        if (tilingLT != null)
+            if (LeanTween.isTweening(tilingLT.uniqueId))
+                tilingLT.setOnComplete(() => { tilingLT = LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, 3f); });
+        tilingLT = LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, 3f);
     }
 
     public void CrossFadeTiling(Vector2 tiling, float time)
     {
-        LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, time);
+        if (Utility.isPoolingOver)
+        {
+            if (tilingLT != null)
+                LeanTween.cancel(tilingLT.uniqueId);
+            tilingLT = LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, time);
+            return;
+        }
+        if (tilingLT != null)
+            if (LeanTween.isTweening(tilingLT.uniqueId))
+                tilingLT.setOnComplete(() => { tilingLT = LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, time); });
+        tilingLT = LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, time);
     }
 
     void UpdateCurvature(Vector2 curve)
