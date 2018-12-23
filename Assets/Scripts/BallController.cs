@@ -9,6 +9,7 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Handheld.Vibrate();
         SceneManager.LoadScene(0);
     }
 
