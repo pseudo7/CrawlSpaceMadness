@@ -10,7 +10,21 @@ public class BallController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Handheld.Vibrate();
-        SceneManager.LoadScene(0);
+        StartCoroutine(Reverse());
+    }
+
+    IEnumerator Reverse()
+    {
+        LeanTween.value(gameObject, ModifyTimeScale, Time.timeScale, 0, 1f);
+        CurvatureController.Instance.CrossFadeTiling(new Vector2(.1f, 1), 2f);
+        yield return new WaitForSecondsRealtime(3);
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void ModifyTimeScale(float val)
+    {
+        Time.timeScale = val;
     }
 
     private void Update()

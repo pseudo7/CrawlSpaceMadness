@@ -79,6 +79,11 @@ public class CurvatureController : MonoBehaviour
         LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, 3f);
     }
 
+    public void CrossFadeTiling(Vector2 tiling, float time)
+    {
+        LeanTween.value(gameObject, UpdateTiling, currentTiling, currentTiling = tiling, time);
+    }
+
     void UpdateCurvature(Vector2 curve)
     {
         tunnelMat.SetVector("_QOffset", curve);
