@@ -10,6 +10,8 @@ public class BallController : MonoBehaviour
     {
         Handheld.Vibrate();
         TunnelManager.Instance.ReverseFinish(false);
+        var meshRenderer = collision.collider.GetComponent<MeshRenderer>();
+        meshRenderer.material = new Material(Shader.Find("Standard")) { color = Color.red, mainTexture = meshRenderer.material.mainTexture };
     }
 
     private void Update()
