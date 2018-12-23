@@ -1,6 +1,7 @@
 ﻿public static class Constants
 {
     public const int POOL_SIZE = 25;
+    public const int OBSTACLES_SIZE = 3;
 
     public const float LEVEL_1_EXIT_DURATION = 5;
     public const float LEVEL_2_EXIT_DURATION = 5;

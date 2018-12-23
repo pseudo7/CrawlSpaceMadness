@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour
 {
     public float turnSpeed = 100f;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        SceneManager.LoadScene(0);
+    }
 
     private void Update()
     {
@@ -16,9 +22,9 @@ public class BallController : MonoBehaviour
 #if UNITY_EDITOR
         z = Input.GetAxis("Horizontal");
 #else
-        z = Input.acceleration.x * 2;
+        z = Input.acceleration.x * 3;
 #endif
-        transform.Rotate(0, 0, z * Time.deltaTime * turnSpeed);
-        transform.GetChild(0).Rotate(z, z, z);
+        transform.parent.Rotate(0, 0, z * Time.deltaTime * turnSpeed);
+        transform.Rotate(z, z, z);
     }
 }

@@ -8,22 +8,28 @@ public class TunnelManager : MonoBehaviour
     public static TunnelManager Instance;
 
     [Header("Controller")]
-    //public float movingSpeed = 2f;
     public Transform ballTransform;
     public Transform movingTransform;
+    public List<GameObject> obstaclesList;
+
+    static Camera mainCam;
 
     private void Awake()
     {
         if (!Instance)
             Instance = this;
+        obstaclesList = new List<GameObject>();
+        mainCam = Camera.main;
     }
 
     private void Start()
     {
-        for (int i = 0; i < Constants.POOL_SIZE; i++)
+        for (int i = 1; i <= Constants.POOL_SIZE; i++)
         {
             var poolObject = ObjectPooler.SharedInstance.GetPooledObject(0);
             poolObject.SetActive(true);
+            if (i % 5 == 0)
+                poolObject.GetComponent<TunnelPiece>().isObstacleEnabled = true;
             var poolObjectTransform = poolObject.transform;
             poolObjectTransform.rotation = Quaternion.identity;
             poolObjectTransform.Rotate(0, 0, i * 30);
@@ -33,18 +39,25 @@ public class TunnelManager : MonoBehaviour
 
     public void ReverseFinish()
     {
-        LeanTween.value(gameObject, UpdateValue, Utility.movingSpeed, -5, 5).setEaseInOutSine();
+        foreach (var obstacle in obstaclesList)
+        {
+            obstacle.GetComponentInParent<TunnelPiece>().isObstacleEnabled = false;
+            obstacle.SetActive(false);
+        }
+        LeanTween.value(gameObject, ModifyMovingSpeed, Utility.movingSpeed, -5, 5).setEaseInOutSine();
         LeanTween.move(ballTransform.gameObject, Vector3.zero, 2f);
-        LeanTween.delayedCall(5, () => { CurvatureController.Instance.CrossFadeCurvature(Vector2.zero); });
+        LeanTween.delayedCall(5, () => { CurvatureController.Instance.CrossFadeCurvature(Vector2.zero); })
+            .setOnComplete(() => { LeanTween.value(mainCam.gameObject, ModifyFOV, mainCam.fieldOfView, 179, 2).setEaseOutSine(); });
+        ;
     }
 
-    void UpdateValue(float val)
+    void ModifyFOV(float fov)
+    {
+        Camera.main.fieldOfView = fov;
+    }
+
+    void ModifyMovingSpeed(float val)
     {
         Utility.movingSpeed = val;
-    }
-
-    public void Update()
-    {
-        //movingTransform.position += movingTransform.forward * movingSpeed * -Time.deltaTime;
     }
 }

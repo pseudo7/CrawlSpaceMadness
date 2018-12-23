@@ -25,6 +25,8 @@ public class LevelManager : MonoBehaviour
 
     static Dictionary<Level, LevelInfo> levelMap;
 
+    Coroutine levelUpdater;
+
     private void Awake()
     {
         if (!Instance)
@@ -45,7 +47,12 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LevelUpdater());
+        levelUpdater = StartCoroutine(LevelUpdater());
+    }
+
+    private void OnDestroy()
+    {
+        StopCoroutine(levelUpdater);
     }
 
     public void UpdateLevel(Level level)
