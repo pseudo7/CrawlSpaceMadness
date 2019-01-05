@@ -62,6 +62,14 @@ public class CurvatureController : MonoBehaviour
         StartCoroutine(ChangeCurve());
     }
 
+#if UNITY_EDITOR
+    [UnityEditor.MenuItem("Pseudo/Capture")]
+    public static void Capture()
+    {
+        ScreenCapture.CaptureScreenshot(string.Format("{0}.png", System.DateTime.Now.Ticks.ToString()));
+    }
+#endif
+
     IEnumerator ChangeCurve()
     {
         while (!Utility.isPoolingOver)
