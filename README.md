@@ -4,7 +4,9 @@
 
 ### The game is simple and easy to master, you just have to avoid the obstacles and SURVIVE. :laughing:
 
-<img src="/Screenshots/11.png">
+<p align="center">
+<img src="GIFs/CrawlSpace.gif">
+</p>
 
 ### The game allows you to create various Levels:
 - Using simple Dictionary and Enum structure.
